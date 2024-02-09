@@ -72,6 +72,18 @@ class Calculator {
         }
     }
 
+    delete() {
+        if (this.num2) {
+            const numStr = this.num2.toString();
+            this.num2 = numStr.slice(0, numStr.length - 1);
+        } else if (this.operator) {
+            this.operator = null;
+        } else if (this.num1) {
+            const numStr = this.num1.toString();
+            this.num1 = numStr.slice(0, numStr.length - 1);
+        }
+    }
+
     updateDisplay() {
         const display = document.querySelector('#display');
 
@@ -119,7 +131,8 @@ const handleCalculatorButtonClick = (event) => {
             calculator.updateDisplay();
             break;
         case '⌫':
-            console.log(`Delete`)
+            calculator.delete()
+            calculator.updateDisplay();
             break;
         case ',':
             console.log(`Comma`)
