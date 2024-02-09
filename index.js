@@ -23,6 +23,10 @@ class Calculator {
     }
 
     operate() {
+        if (!this.num1 || !this.num2 || !this.operator) {
+            return;
+        }
+
         let result;
 
         switch (this.operator) {
