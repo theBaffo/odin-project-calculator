@@ -44,7 +44,7 @@ class Calculator {
     }
 
     saveNumber(num) {
-        // TODO: Number with multiple digits / comma
+        // TODO: Number with comma
         if (!this.operator) {
             const currentNum = this.num1 || '';
             
@@ -57,7 +57,19 @@ class Calculator {
     }
 
     saveOperator(operator) {
-        this.operator = operator;
+        // Check if we're trying to "chain" operations
+        // Otherwise, just update the operator
+        if (this.num1 && this.num2 && this.operator) {
+            this.operate();
+            
+            // Set num1 as current result
+            this.num1 = this.result;
+            this.num2 = null;
+            this.operator = operator;
+            this.result = null;
+        } else {
+            this.operator = operator;
+        }
     }
 
     updateDisplay() {
