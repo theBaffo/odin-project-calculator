@@ -7,19 +7,19 @@ class Calculator {
     }
 
     add() {
-        return this.num1 + this.num2;
+        return parseFloat(this.num1) + parseFloat(this.num2);
     }
 
     subtract() {
-        return this.num1 - this.num2;
+        return parseFloat(this.num1) - parseFloat(this.num2);
     }
 
     multiply() {
-        return this.num1 * this.num2;
+        return parseFloat(this.num1) * parseFloat(this.num2);
     }
 
     divide() {
-        return this.num1 / this.num2;
+        return parseFloat(this.num1) / parseFloat(this.num2);
     }
 
     operate() {
@@ -48,22 +48,21 @@ class Calculator {
     }
 
     saveNumber(num) {
-        // TODO: Number with comma
-        if (!this.operator) {
+        if (this.operator === null) {
             const currentNum = this.num1 || '';
             
-            this.num1 = parseInt(currentNum.toString() + num.toString())
+            this.num1 = currentNum + num
         } else {
             const currentNum = this.num2 || '';
             
-            this.num2 = parseInt(currentNum.toString() + num.toString())
+            this.num2 = currentNum + num
         }
     }
 
     saveOperator(operator) {
         // Check if we're trying to "chain" operations
         // Otherwise, just update the operator
-        if (this.num1 && this.num2 && this.operator) {
+        if (this.num1 !== null && this.num2 !== null && this.operator !== null) {
             this.operate();
             
             // Set num1 as current result
@@ -76,14 +75,32 @@ class Calculator {
         }
     }
 
+    addComma() {
+        if (this.num2 !== null) {
+            let numStr = this.num2;
+
+            if (numStr.indexOf('.') === -1) {
+                numStr += '.';
+                this.num2 = numStr;
+            }
+        } else if (this.num1 !== null) {
+            let numStr = this.num1;
+
+            if (numStr.indexOf('.') === -1) {
+                numStr += '.';
+                this.num1 = numStr;
+            }
+        }
+    }
+
     delete() {
-        if (this.num2) {
-            const numStr = this.num2.toString();
+        if (this.num2 !== null) {
+            const numStr = this.num2;
             this.num2 = numStr.slice(0, numStr.length - 1);
-        } else if (this.operator) {
+        } else if (this.operator !== null) {
             this.operator = null;
-        } else if (this.num1) {
-            const numStr = this.num1.toString();
+        } else if (this.num1 !== null) {
+            const numStr = this.num1;
             this.num1 = numStr.slice(0, numStr.length - 1);
         }
     }
@@ -91,7 +108,7 @@ class Calculator {
     updateDisplay() {
         const display = document.querySelector('#display');
 
-        const displayText = this.result ?
+        const displayText = this.result !== null ?
             `${this.result}` :
             `${this.num1 || ''}${this.operator || ''}${this.num2 || ''}`;
 
@@ -139,7 +156,8 @@ const handleCalculatorButtonClick = (event) => {
             calculator.updateDisplay();
             break;
         case ',':
-            console.log(`Comma`)
+            calculator.addComma();
+            calculator.updateDisplay();
             break;
         case 'AC':
             calculator.clearCalculator();
