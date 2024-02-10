@@ -75,7 +75,7 @@ class Calculator {
         }
     }
 
-    addComma() {
+    addDot() {
         if (this.num2 !== null) {
             let numStr = this.num2;
 
@@ -155,8 +155,8 @@ const handleCalculatorButtonClick = (event) => {
             calculator.delete()
             calculator.updateDisplay();
             break;
-        case ',':
-            calculator.addComma();
+        case '.':
+            calculator.addDot();
             calculator.updateDisplay();
             break;
         case 'AC':
