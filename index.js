@@ -5,7 +5,6 @@ class Calculator {
         this.operator = null;
         this.num1 = null;
         this.num2 = null;
-        this.result = null;
     }
 
     add() {
@@ -70,7 +69,12 @@ class Calculator {
                 break;
         }
 
-        this.result = result;
+        // Set num1 as result
+        this.num1 = result.toString();
+
+        // Then, clear operator and num2
+        this.num2 = null;
+        this.operator = null;
     }
 
     saveNumber(num) {
@@ -90,15 +94,9 @@ class Calculator {
         // Otherwise, just update the operator
         if (this.num1 !== null && this.num2 !== null && this.operator !== null) {
             this.operate();
-            
-            // Set num1 as current result
-            this.num1 = this.result;
-            this.num2 = null;
-            this.operator = operator;
-            this.result = null;
-        } else {
-            this.operator = operator;
         }
+
+        this.operator = operator;
     }
 
     addDot() {
@@ -134,18 +132,13 @@ class Calculator {
     updateDisplay() {
         const display = document.querySelector('#display');
 
-        const displayText = this.result !== null ?
-            `${this.result}` :
-            `${this.num1 || ''}${this.operator || ''}${this.num2 || ''}`;
-
-        display.textContent = displayText;
+        display.textContent = `${this.num1 || ''}${this.operator || ''}${this.num2 || ''}`;
     }
 
     clearCalculator() {
         this.operator = null;
         this.num1 = null;
         this.num2 = null;
-        this.result = null;
     }
 }
 
