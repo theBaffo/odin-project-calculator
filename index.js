@@ -1,3 +1,5 @@
+const MAX_DIGITS = 12;
+
 class Calculator {
     constructor() {
         this.operator = null;
@@ -7,23 +9,47 @@ class Calculator {
     }
 
     add() {
-        return parseFloat(this.num1) + parseFloat(this.num2);
+        const num1 = Number.isInteger(this.num1) ? parseInt(this.num1) : parseFloat(this.num1);
+        const num2 = Number.isInteger(this.num2) ? parseInt(this.num2) : parseFloat(this.num2);
+
+        return num1 + num2;
     }
 
     subtract() {
-        return parseFloat(this.num1) - parseFloat(this.num2);
+        const num1 = Number.isInteger(this.num1) ? parseInt(this.num1) : parseFloat(this.num1);
+        const num2 = Number.isInteger(this.num2) ? parseInt(this.num2) : parseFloat(this.num2);
+
+        return num1 - num2;
     }
 
     multiply() {
-        return parseFloat(this.num1) * parseFloat(this.num2);
+        const num1 = Number.isInteger(this.num1) ? parseInt(this.num1) : parseFloat(this.num1);
+        const num2 = Number.isInteger(this.num2) ? parseInt(this.num2) : parseFloat(this.num2);
+
+        let result = num1 * num2;
+
+        if (!Number.isInteger(result) && result.toString().length > MAX_DIGITS) {
+            result = result.toFixed(10);
+        }
+
+        return result;
     }
 
     divide() {
-        return parseFloat(this.num1) / parseFloat(this.num2);
+        const num1 = Number.isInteger(this.num1) ? parseInt(this.num1) : parseFloat(this.num1);
+        const num2 = Number.isInteger(this.num2) ? parseInt(this.num2) : parseFloat(this.num2);
+
+        let result = num1 / num2;
+
+        if (!Number.isInteger(result) && result.toString().length > MAX_DIGITS) {
+            result = result.toFixed(10);
+        }
+
+        return result;
     }
 
     operate() {
-        if (!this.num1 || !this.num2 || !this.operator) {
+        if (this.num1 === null || this.num2 === null || this.operator === null) {
             return;
         }
 
